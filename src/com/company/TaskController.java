@@ -17,21 +17,24 @@ public class TaskController implements TaskInterface{
     public void updateTaskList() {
     }
 
-    public void updateTaskList(TaskModel newTask){
-        taskArrayList.add(newTask);
-        Collections.sort(taskArrayList);
+    public void removeTask(int taskID){
+        taskObjectsList.remove(taskID);
+        new GuiController(taskID);
     }
 
-    public void removeTask(int x){
-        taskArrayList.remove(x);
-    }
+    private void updateTaskList(TaskModel newTask){
+            taskObjectsList.add(newTask);
+            Collections.sort(taskObjectsList);
+        }
 
-    public TaskModel createTask(Date date, String type, String task){
-        if(type == "Office"){
+    private TaskModel createTask(Date date, String type, String task){
+        if(type.equals("Office")){
             TaskOfficeModel newTask = new TaskOfficeModel(date, type, task);
-        } else if(type == "Errands")        {
+            return newTask;
+        } else if(type.equals("Errands")){
             TaskErrandsModel newTask = new TaskErrandsModel(date, type, task);
+            return newTask;
         } TaskHomeModel newTask = new TaskHomeModel(date, type, task);
-        return newTask;
+            return newTask;
     }
 }

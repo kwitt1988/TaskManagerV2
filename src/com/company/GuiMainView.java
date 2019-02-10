@@ -6,33 +6,39 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GuiMainView extends GuiView {
-    private JFrame mainFrame = new JFrame();
+class GuiMainView extends GuiView {
+    public static JFrame mainFrame = new JFrame();
     private JPanel mainPanel = new JPanel();
-    private JPanel todoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 3));
-    private JPanel taskPanel = new JPanel(new GridLayout(10, 2));
-    private JLabel addNewTaskText = new JLabel("Add new task:");
     private JButton homeTaskButton = new JButton("Home");
     private JButton officeTaskButton = new JButton("Office");
     private JButton errandsTaskButton = new JButton("Errands");
     private ArrayList<JButton> clearTaskButton = new ArrayList<>(10);
-    static ArrayList<JTextField> taskTextField = new ArrayList<>(10);
-    static JTextField lastActionJText = new JTextField();
 
     GuiMainView(){
         mainPanel();
         frameSettings(mainFrame, mainPanel, 600, 800);
+
     }
 
     @Override
     void mainPanel() {
         mainPanel.setLayout(new BorderLayout(5, 10));
-        mainPanel.add(todoPanel(), BorderLayout.NORTH);
+        mainPanel.add(topPanel(), BorderLayout.NORTH);
         mainPanel.add(taskPanel(), BorderLayout.CENTER);
         mainPanel.add(lastActionPanel(), BorderLayout.SOUTH);
     }
 
+    private JPanel topPanel(){
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout(5, 10));
+        topPanel.add(taskCount, BorderLayout.SOUTH);
+        topPanel.add(todoPanel(), BorderLayout.NORTH);
+        return topPanel;
+    }
+
     private JPanel todoPanel(){
+        JPanel todoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 3));
+        JLabel addNewTaskText = new JLabel("Add new task:");
         todoPanel.add(addNewTaskText);
         todoPanel.add(officeTaskButton);
         todoPanel.add(homeTaskButton);
@@ -41,25 +47,33 @@ public class GuiMainView extends GuiView {
     }
 
     private JPanel taskPanel(){
+        JPanel taskPanel = new JPanel(new GridLayout(10, 2));
         for (int i = 0; i < 10; i++) {
-            taskTextField.add(new JTextField(" "));
+            guiTaskList.add(new JTextField(" "));
             clearTaskButton.add(new JButton("Clear TaskObject"));
-            taskPanel.add(taskTextField.get(i));
+            taskPanel.add(guiTaskList.get(i));
             taskPanel.add(clearTaskButton.get(i));
-            taskTextField.get(i).setEditable(false);
-            taskTextField.get(i).setBorder(new TitledBorder(("TaskObject: ")));
+            guiTaskList.get(i).setEditable(false);
+            guiTaskList.get(i).setBorder(new TitledBorder(("TaskObject: ")));
         }
         return taskPanel;
     }
 
     private JPanel lastActionPanel() {
         JPanel lastActionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 3));
-        lastActionJText.setSize(400, 50);
-        lastActionJText.setEditable(false);
-        lastActionPanel.add(lastActionJText);
+        lastActionText.setSize(400, 50);
+        lastActionText.setEditable(false);
+        lastActionText.setText("");
+        lastActionPanel.add(lastActionText);
         return lastActionPanel;
     }
 
+    static void refresh(){
+        mainFrame.revalidate();
+        mainFrame.repaint();
+    }
+
+    @Override
     void listeners() {officeTaskButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -84,8 +98,7 @@ public class GuiMainView extends GuiView {
             clearTaskButton.get(current).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     new TaskController().removeTask(current);
-                    new GuiController(current);
-                    mainFrame.revalidate();
+                    refresh();
                 }
             });
         }

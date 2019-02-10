@@ -3,9 +3,9 @@ package com.company;
 import java.util.Date;
 
 public class TaskModel implements Comparable<TaskModel>{
-    Date date;
-    String type;
-    String task;
+    private Date date;
+    private String type;
+    private String task;
 
     TaskModel(Date newDate, String newType, String newTask){
         this.date = newDate;

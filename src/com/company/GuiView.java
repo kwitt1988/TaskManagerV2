@@ -2,10 +2,9 @@ package com.company;
 
 import javax.swing.*;
 
-public abstract class GuiView extends JFrame {
+abstract class GuiView extends JFrame implements GuiInterface {
     abstract void mainPanel();
     abstract void listeners();
-
     void frameSettings(JFrame frame, JPanel mainPanel, int x, int y){
         frame.add(mainPanel);
         frame.setSize(x, y);

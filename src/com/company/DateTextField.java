@@ -15,8 +15,6 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class DateTextField extends JTextField {
+class DateTextField extends JTextField {
 
     private static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     private static final int DIALOG_WIDTH = 200;
@@ -51,12 +49,7 @@ public class DateTextField extends JTextField {
         this(new Date());
     }
 
-    public DateTextField(String dateFormatPattern, Date date) {
-        this(date);
-        DEFAULT_DATE_FORMAT = dateFormatPattern;
-    }
-
-    public DateTextField(Date date) {
+    private DateTextField(Date date) {
         setDate(date);
         setEditable(true);
         //setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -118,18 +111,14 @@ public class DateTextField extends JTextField {
         return result;
     }
 
-    public SimpleDateFormat getDefaultDateFormat() {
+    private SimpleDateFormat getDefaultDateFormat() {
         if (dateFormat == null) {
             dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         }
         return dateFormat;
     }
 
-    public void setText(Date date) {
-        setDate(date);
-    }
-
-    public void setDate(Date date) {
+    private void setDate(Date date) {
         super.setText(getDefaultDateFormat().format(date));
     }
 
@@ -209,7 +198,7 @@ public class DateTextField extends JTextField {
         }
 
         private JPanel createWeekAndDayPanal() {
-            String colname[] = { "S", "M", "T", "W", "T", "F", "S" };
+            String[] colname = {"S", "M", "T", "W", "T", "F", "S"};
             JPanel panel = new JPanel();
             panel.setFont(new Font("Arial", Font.PLAIN, 10));
             panel.setLayout(new GridLayout(7, 7));

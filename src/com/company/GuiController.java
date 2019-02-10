@@ -1,32 +1,43 @@
 package com.company;
 
-public class GuiController implements TaskInterface{
+public class GuiController implements TaskInterface, GuiInterface{
 
     GuiController(TaskModel newTask){
-        setLastAction(newTask.toString());
+        setLastAction("Added: " + newTask.toString());
         updateTaskList();
+        GuiMainView.refresh();
     }
 
-    GuiController(int oldTask){
-        setLastAction("Removed: " + GuiMainView.taskTextField.get(oldTask).getText());
+    GuiController(int taskID){
+        setLastAction("Removed: " + guiTaskList.get(taskID).getText());
         clearGuiTaskList();
         updateTaskList();
+        GuiMainView.refresh();
     }
 
     @Override
     public void updateTaskList() {
-        for(int i = 0; i < taskArrayList.size(); i++) {
-            GuiMainView.taskTextField.get(i).setText(taskArrayList.get(i).toString());
-        }
+        if(taskObjectsList.size() > 0) {
+            for (int i = 0; i < taskObjectsList.size(); i++) {
+                guiTaskList.get(i).setText(taskObjectsList.get(i).toString());
+                updateTaskCount();
+            }
+        } else updateTaskCount();
     }
 
-    void setLastAction(String lastAction){
-        GuiMainView.lastActionJText.setText(lastAction);
+    private void updateTaskCount(){
+        if(taskObjectsList.size() == 0) {
+            GuiMainView.taskCount.setText("Currently you have 0 tasks.");
+        } else GuiMainView.taskCount.setText("Currently you have " + TaskInterface.taskObjectsList.size() + " tasks.");
     }
 
-    public void clearGuiTaskList(){
-        for (int i = taskArrayList.size(); i < 10; i++){
-            GuiMainView.taskTextField.get(i).setText("");
+    private void setLastAction(String lastAction){
+        lastActionText.setText(lastAction);
+    }
+
+    private void clearGuiTaskList(){
+        for (int i = taskObjectsList.size(); i < 10; i++){
+            guiTaskList.get(i).setText("");
         }
     }
 }

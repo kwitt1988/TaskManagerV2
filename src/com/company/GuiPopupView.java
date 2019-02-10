@@ -6,15 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-public class GuiPopupView extends GuiView {
+class GuiPopupView extends GuiView {
     private JFrame mainFrame = new JFrame();
     private JPanel mainPanel = new JPanel();
     private JButton addTaskButton = new JButton("Add");
     private JButton cancelButton = new JButton("Cancel");
-    private JButton calenderButton = new JButton("KUK");
+    private JButton calenderButton = new JButton("Calendar");
     private JTextField inputTaskField = new JTextField();
     private DateTextField calender = new DateTextField();
-    private GridBagConstraints gbc = new GridBagConstraints();
     private String taskType;
 
     GuiPopupView(String taskType){
@@ -25,6 +24,7 @@ public class GuiPopupView extends GuiView {
 
     @Override
     void mainPanel() {
+        GridBagConstraints gbc = new GridBagConstraints();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
         JLabel label = new JLabel("Add " + " Task:");
         gbc.weightx = 0.5;
@@ -61,6 +61,7 @@ public class GuiPopupView extends GuiView {
 
     }
 
+    @Override
     void listeners() {
         calenderButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
