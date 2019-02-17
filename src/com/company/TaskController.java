@@ -14,15 +14,13 @@ public class TaskController implements TaskInterface{
     // 3. Invoke the no-arg constructor of GuiController which is used to realize changes made to the taskObjectList.
 
     TaskController(Date date, String type, String task){
-        TaskModel newTask = createTask(date, type, task);
-        updateTaskList(newTask);
-        System.out.println(taskObjectsList);
+        updateTaskList(createTask(date, type, task));
     }
 
     // Handles the removal of an object within the taskObjectsList corresponding with the passed chosen index via its parameters.
     // Passes the object to a new GuiController to handle the adding of a removed object in relation to the view.
 
-    TaskController(int taskID, String GuiTaskListCheck){
+    TaskController(int taskID){
         try {
             taskObjectsList.remove(taskID);
         }

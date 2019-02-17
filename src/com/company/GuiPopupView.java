@@ -83,6 +83,8 @@ class GuiPopupView extends GuiView {
         return validDate;
     }
 
+    // Listeners for all buttons comprised within GuiPopupView.
+    // We here use the "Anonymous Inner Class Handlers" way to do this. (P. 594, Liang 10th ed).
     @Override
     void listeners() {
         calenderButton.addActionListener(new ActionListener() {

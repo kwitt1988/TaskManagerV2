@@ -1,9 +1,8 @@
 package com.company;
 
-// This class is responsible for setting removed/added tasks to the GUI.
+// This class is responsible for updating the GUI when changes been made.
 // To realize this it implements the two interfaces TaskInterface and GuiInterface.
-// If invoked with no args it checks the last added task in TaskInterface and updates the components inside GuiInterface.
-// If invoked with an int, taskID, it removes the corresponding taskID from the GuiInterface.
+// The GuiInterface holds the element the controller updates. And the TaskInterface holds the updates.
 
 import java.util.Collections;
 

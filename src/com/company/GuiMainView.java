@@ -6,10 +6,10 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-// GuiMainView is a class for handling the Taskmanagers main GUI.
+// GuiMainView is a class responsible for handling the Taskmanagers main GUI.
 // The class extends the superclass GuiView for easy implementation of standard JFrame settings.
 // The class also implements the interface GuiInterface which holds some components that the class displays -
-// - but are being manipulated by another class.
+// - but are being manipulated by the GuiController
 
 class GuiMainView extends GuiView implements GuiInterface {
     private static JFrame mainFrame = new JFrame();
@@ -87,6 +87,9 @@ class GuiMainView extends GuiView implements GuiInterface {
     }
 
     // Listeners for all buttons comprised within GuiMainView.
+    // We here use the "Anonymous Inner Class Handlers" way to do this. (P. 594, Liang 10th ed).
+    // Depending on which of the add-buttons is clicked a new GuiPopupWindow is instantiated with the corresponding taskType.
+
     @Override
     void listeners() {officeTaskButton.addActionListener(new ActionListener() {
         @Override
@@ -109,14 +112,14 @@ class GuiMainView extends GuiView implements GuiInterface {
 
         // A loop that uses the fact that each of the ten rows holding tasks and clearTaskButtons
         // are created during one iteration of a loop. This means that they both reside
-        // in the same index in their respective ArrayList. So if the user presses clearTaskButton(7),
-        // guiTaskList(7) gets cleared using the TaskController class.
+        // in the same index in their respective ArrayList. When clicked the button instantiate first an TaskController
+        // for updating the ArrayList holding the tasks. When this is done we instantiate an GuiController to update the UI.
 
         for (int i = 0; i < 10; i++) {
             final int current = i;
             clearTaskButton.get(current).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    new TaskController(current, guiTaskList.get(current).getText());
+                    new TaskController(current);
                     new GuiController(current);
                     refresh();
                 }
