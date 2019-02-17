@@ -5,11 +5,12 @@ package com.company;
 // constants that are shared by many classes in an interface.
 // Page 572 - Liang 9th edition.
 
+// The GuiInterface is responsible for holding the components that GuiController updates, and GuiMainView displays.
+
 import javax.swing.*;
 import java.util.ArrayList;
-
 public interface GuiInterface {
-    ArrayList<JTextField> guiTaskList = new ArrayList<>(10);
+    ArrayList<JTextField> guiTaskList    = new ArrayList<>(10);
     JTextField lastActionText = new JTextField();
     JTextField taskCount = new JTextField("Currently you have 0 tasks.");
 }
